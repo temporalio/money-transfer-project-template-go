@@ -25,17 +25,14 @@ func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) error 
     RetryPolicy:         retrypolicy,
   }
   ctx = workflow.WithActivityOptions(ctx, options)
-
   err := workflow.ExecuteActivity(ctx, Withdraw, transferDetails).Get(ctx, nil)
   if err != nil {
     fmt.Println(err.Error())
   }
-
   err = workflow.ExecuteActivity(ctx, Deposit, transferDetails).Get(ctx, nil)
   if err != nil {
     fmt.Println(err.Error())
   }
-
   return nil
 }
 // @@@SNIPEND
