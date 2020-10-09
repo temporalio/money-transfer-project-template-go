@@ -1,4 +1,3 @@
-// @@@SNIPSTART transfer-money-project-template-go-activities
 package app
 
 import (
@@ -16,6 +15,7 @@ func Withdraw(ctx context.Context, transferDetails TransferDetails) error {
 	return nil
 }
 
+// @@@SNIPSTART transfer-money-project-template-go-activity
 func Deposit(ctx context.Context, transferDetails TransferDetails) error {
   fmt.Printf(
     "\nDepositing $%f into account %s. ReferenceId: %s\n",
@@ -23,6 +23,7 @@ func Deposit(ctx context.Context, transferDetails TransferDetails) error {
     transferDetails.ToAccount,
     transferDetails.ReferenceID,
   )
+  // Switch out comments on the return statements to simulate an error
   //return fmt.Errorf("deposit did not occur due to an issue")
   return nil
 }

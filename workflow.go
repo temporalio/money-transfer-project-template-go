@@ -1,24 +1,28 @@
-// @@@SNIPSTART transfer-money-project-template-go-workflow
 package app
 
 import (
   "fmt"
   "time"
 
+  "go.temporal.io/sdk/temporal"
   "go.temporal.io/sdk/workflow"
 )
 
-type TransferDetails struct {
-  Amount      float32
-  FromAccount string
-  ToAccount   string
-  ReferenceID string
-}
-
+// @@@SNIPSTART transfer-money-project-template-go-workflow
 func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) error {
-
+  // RetryPolicy specifies how to automatically handle retries if an Activity fails.
+  retrypolicy := &temporal.RetryPolicy{
+    InitialInterval:    time.Second,
+    BackoffCoefficient: 2.0,
+    MaximumInterval:    time.Minute,
+    MaximumAttempts:    500,
+  }
   options := workflow.ActivityOptions {
-    ScheduleToCloseTimeout: time.Minute,
+    // Timeout options specify when to automatically timeout Actvitivy functions.
+    StartToCloseTimeout: time.Minute,
+    // Optionally provide a customized RetryPolicy.
+    // Temporal retries failures by default, this is just an example.
+    RetryPolicy:         retrypolicy,
   }
   ctx = workflow.WithActivityOptions(ctx, options)
 

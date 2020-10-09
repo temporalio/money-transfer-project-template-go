@@ -1,5 +1,12 @@
-// @@@SNIPSTART transfer-money-project-template-go-shared
 package app
 
+// @@@SNIPSTART transfer-money-project-template-go-shared-task-queue
 const TransferMoneyTaskQueue = "TRANSFER_MONEY_TASK_QUEUE"
 /// @@@SNIPEND
+
+type TransferDetails struct {
+  Amount      float32
+  FromAccount string
+  ToAccount   string
+  ReferenceID string
+}
