@@ -27,5 +27,4 @@ func Deposit(ctx context.Context, transferDetails TransferDetails) error {
 	//return fmt.Errorf("deposit did not occur due to an issue")
 	return nil
 }
-
 // @@@SNIPEND"

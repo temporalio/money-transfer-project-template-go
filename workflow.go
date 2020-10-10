@@ -35,5 +35,4 @@ func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) error 
 	}
 	return nil
 }
-
 // @@@SNIPEND
