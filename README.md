@@ -1,1 +1,1 @@
-# transfer-money-project-template-go
+# money-transfer-project-template-go

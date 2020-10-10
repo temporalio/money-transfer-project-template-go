@@ -1,4 +1,4 @@
-module transfer-money-project-template-go/app
+module money-transfer-project-template-go/app
 
 go 1.14
 
