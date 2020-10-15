@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/google/uuid"
@@ -29,20 +28,23 @@ func main() {
 		ToAccount:   "002-002",
 		ReferenceID: uuid.New().String(),
 	}
-	we, _ := c.ExecuteWorkflow(context.Background(), options, app.TransferMoney, transferDetails)
+	we, err := c.ExecuteWorkflow(context.Background(), options, app.TransferMoney, transferDetails)
+	if err != nil {
+		log.Fatalln("error starting TransferMoney workflow", err)
+	}
 	printResults(transferDetails, we.GetID(), we.GetRunID())
 }
 // @@@SNIPEND
 
 func printResults(transferDetails app.TransferDetails, workflowID, runID string) {
-	fmt.Printf(
+	log.Printf(
 		"\nTransfer of $%f from account %s to account %s is processing. ReferenceID: %s\n",
 		transferDetails.Amount,
 		transferDetails.FromAccount,
 		transferDetails.ToAccount,
 		transferDetails.ReferenceID,
 	)
-	fmt.Printf(
+	log.Printf(
 		"\nWorkflowID: %s RunID: %s\n",
 		workflowID,
 		runID,
