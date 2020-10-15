@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"time"
 
 	"go.temporal.io/sdk/temporal"
@@ -27,11 +26,11 @@ func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) error 
 	ctx = workflow.WithActivityOptions(ctx, options)
 	err := workflow.ExecuteActivity(ctx, Withdraw, transferDetails).Get(ctx, nil)
 	if err != nil {
-		fmt.Println(err.Error())
+		return err
 	}
 	err = workflow.ExecuteActivity(ctx, Deposit, transferDetails).Get(ctx, nil)
 	if err != nil {
-		fmt.Println(err.Error())
+		return err
 	}
 	return nil
 }
