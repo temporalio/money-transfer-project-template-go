@@ -43,4 +43,10 @@ In YET ANOTHER terminal instance, run the worker. Notice that this worker hosts 
 go run worker/main.go
 ```
 
-Now you can see the workflow run to completion. Please [read the tutorial](https://docs.temporal.io/docs/go/run-your-first-app-tutorial) for more details.
+Now you can see the workflow run to completion.
+
+## What Next?
+
+You can run the Workflow code a few more times with `go run start/main.go` to understand how it interacts with the Worker and Temporal Server.
+
+Please [read the tutorial](https://docs.temporal.io/docs/go/run-your-first-app-tutorial) for more details.
