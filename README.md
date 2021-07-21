@@ -43,7 +43,7 @@ In YET ANOTHER terminal instance, run the worker. Notice that this worker hosts 
 go run worker/main.go
 ```
 
-Now you can see the workflow run to completion.
+Now you can see the workflow run to completion. You can also see the worker polling for workflows and activities in the task queue at [http://localhost:8088/namespaces/default/task-queues/TRANSFER_MONEY_TASK_QUEUE](http://localhost:8088/namespaces/default/task-queues/TRANSFER_MONEY_TASK_QUEUE).
 
 ## What Next?
 
