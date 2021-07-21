@@ -17,7 +17,7 @@ func main() {
 		log.Fatalln("unable to create Temporal client", err)
 	}
 	defer c.Close()
-	// This worker hosts both Worker and Activity functions
+	// This worker hosts both Workflow and Activity functions
 	w := worker.New(c, app.TransferMoneyTaskQueue, worker.Options{})
 	w.RegisterWorkflow(app.TransferMoney)
 	w.RegisterActivity(app.Withdraw)

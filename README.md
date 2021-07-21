@@ -33,9 +33,11 @@ cd money-transfer-project-template-go
 go run start/main.go
 ```
 
-Observe that Temporal Web reflects the workflow, but it is pending. This is because there is no Workflow or Activity worker yet to process this work.
+Observe that Temporal Web reflects the workflow, but it is pending. This is because there is no Workflow or Activity Worker yet to process this work.
 
 ### Step 3: Run the Worker
+
+In YET ANOTHER terminal instance, run the worker. Notice that this worker hosts both Workflow and Activity functions.
 
 ```bash
 go run worker/main.go
