@@ -33,7 +33,7 @@ cd money-transfer-project-template-go
 go run start/main.go
 ```
 
-Observe that Temporal Web reflects the workflow, but it is pending. This is because there is no Workflow or Activity Worker yet to process this work.
+Observe that Temporal Web reflects the workflow, but it is still in "Running" status. This is because there is no Workflow or Activity Worker yet listening to the `TRANSFER_MONEY_TASK_QUEUE` task queue to process this work.
 
 ### Step 3: Run the Worker
 
