@@ -17,7 +17,7 @@ func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) error 
 		MaximumAttempts:    500,
 	}
 	options := workflow.ActivityOptions{
-		// Timeout options specify when to automatically timeout Actvitivy functions.
+		// Timeout options specify when to automatically timeout Activity functions.
 		StartToCloseTimeout: time.Minute,
 		// Optionally provide a customized RetryPolicy.
 		// Temporal retries failures by default, this is just an example.
