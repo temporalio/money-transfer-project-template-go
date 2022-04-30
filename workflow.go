@@ -18,7 +18,11 @@ func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) error 
 	}
 	options := workflow.ActivityOptions{
 		// Timeout options specify when to automatically timeout Activity functions.
-		StartToCloseTimeout: time.Minute,
+		//
+		// The activity deadline is computed as the more recent of the StartToClose
+		// and ScheduleToClose deadlines.
+		StartToCloseTimeout:    time.Minute,
+		ScheduleToCloseTimeout: time.Minute,
 		// Optionally provide a customized RetryPolicy.
 		// Temporal retries failures by default, this is just an example.
 		RetryPolicy: retrypolicy,
@@ -34,4 +38,5 @@ func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) error 
 	}
 	return nil
 }
+
 // @@@SNIPEND
