@@ -16,7 +16,7 @@ cd  docker-compose
 docker-compose up
 ```
 
-Leave it running. You can see Temporal Web at [localhost:8088](localhost:8088). There should be no workflows visible in the dashboard right now.
+Leave it running. You can see Temporal Web at [localhost:8080](localhost:8080) for the WebUi in Beta, or the legacy WebUi at [localhost:8088](localhost:8088). There should be no workflows visible in the dashboard right now.
 
 ### Step 1: Clone this repo
 
