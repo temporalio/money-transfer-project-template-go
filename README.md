@@ -2,7 +2,7 @@
 
 This is a simple project for demonstrating Temporal with the Go SDK.
 
-The full 20 minute guide is here: https://docs.temporal.io/docs/go/run-your-first-app-tutorial
+The full 20 minute guide is here: https://learn.temporal.io/getting_started/go/first_program_in_go/
 
 ## Basic instructions
 
@@ -16,7 +16,7 @@ cd  docker-compose
 docker-compose up
 ```
 
-Leave it running. You can see Temporal Web at [localhost:8080](localhost:8080) which is currently in Beta. To use the legacy Temporal Web use the [localhost:8088](localhost:8088) URL. There should be no workflows visible in the dashboard right now.
+Leave it running. You can use the Temporal Web UI at [localhost:8080](localhost:8080) which is currently in Beta. To use the legacy Temporal Web UI, use the [localhost:8088](localhost:8088) URL. There should be no workflows visible in the dashboard right now.
 
 ### Step 1: Clone this repo
 
@@ -51,4 +51,4 @@ Now you can see the workflow run to completion. You can also see the worker poll
 
 You can run the Workflow code a few more times with `go run start/main.go` to understand how it interacts with the Worker and Temporal Server.
 
-Please [read the tutorial](https://docs.temporal.io/docs/go/run-your-first-app-tutorial) for more details.
+Please [read the tutorial](https://learn.temporal.io/getting_started/go/first_program_in_go/) for more details.
