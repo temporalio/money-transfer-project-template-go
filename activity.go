@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// @@@SNIPSTART money-transfer-project-template-go-activity-withdraw
 func Withdraw(ctx context.Context, transferDetails TransferDetails) error {
 	fmt.Printf(
 		"\nWithdrawing $%f from account %s. ReferenceId: %s\n",
@@ -15,7 +16,9 @@ func Withdraw(ctx context.Context, transferDetails TransferDetails) error {
 	return nil
 }
 
-// @@@SNIPSTART money-transfer-project-template-go-activity
+// @@@SNIPEND
+
+// @@@SNIPSTART money-transfer-project-template-go-activity-deposit
 func Deposit(ctx context.Context, transferDetails TransferDetails) error {
 	fmt.Printf(
 		"\nDepositing $%f into account %s. ReferenceId: %s\n",
@@ -27,4 +30,5 @@ func Deposit(ctx context.Context, transferDetails TransferDetails) error {
 	//return fmt.Errorf("deposit did not occur due to an issue")
 	return nil
 }
-// @@@SNIPEND"
+
+// @@@SNIPEND
