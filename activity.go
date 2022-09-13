@@ -8,11 +8,7 @@ import (
 func Withdraw(ctx context.Context, data PaymentDetails) (string, error) {
 	bank := BankingService{"bank-api.example.com"}
 	confirmation, err := bank.Withdraw(data.SourceAccount, data.Amount)
-	if err != nil {
-		return "", err
-	}
-
-	return confirmation, nil
+	return confirmation, err
 }
 
 // @@@SNIPEND
@@ -23,11 +19,7 @@ func Deposit(ctx context.Context, data PaymentDetails) (string, error) {
 	// Uncomment the next line and comment the one after that to simulate failure
 	// confirmation, err := bank.DepositThatFails(data.TargetAccount, data.Amount)
 	confirmation, err := bank.Deposit(data.TargetAccount, data.Amount)
-	if err != nil {
-		return "", err
-	}
-
-	return confirmation, nil
+	return confirmation, err
 }
 
 // @@@SNIPEND
