@@ -17,18 +17,18 @@ type BankingService struct {
 }
 
 func (client BankingService) Withdraw(accountNum string, amount int) (string, error) {
-	return generateTranactionId("W", 10), nil
+	return generateTransactionId("W", 10), nil
 }
 
 func (client BankingService) Deposit(accountNum string, amount int) (string, error) {
-	return generateTranactionId("D", 10), nil
+	return generateTransactionId("D", 10), nil
 }
 
 func (client BankingService) DepositThatFails(accountNum string, amount int) (string, error) {
 	return "", errors.New("This deposit has failed.")
 }
 
-func generateTranactionId(prefix string, length int) string {
+func generateTransactionId(prefix string, length int) string {
 	randChars := make([]byte, length)
 	for i := range randChars {
 		allowedChars := "0123456789"
