@@ -29,10 +29,14 @@ func main() {
 		Amount:        250,
 	}
 
+	log.Printf("Starting transfer from account %s to account %s for %d", input.SourceAccount, input.TargetAccount, input.Amount)
+
 	we, err := c.ExecuteWorkflow(context.Background(), options, app.MoneyTransfer, input)
 	if err != nil {
 		log.Fatalln("unable to start the Workflow", err)
 	}
+
+	log.Printf("WorkflowID: %s RunID: %s\n", we.GetID(), we.GetRunID())
 
 	var result string
 	err = we.Get(context.Background(), &result)
