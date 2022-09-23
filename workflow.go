@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"time"
 
 	"go.temporal.io/sdk/temporal"
@@ -8,7 +9,7 @@ import (
 )
 
 // @@@SNIPSTART money-transfer-project-template-go-workflow
-func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) error {
+func MoneyTransfer(ctx workflow.Context, input PaymentDetails) (string, error) {
 	// RetryPolicy specifies how to automatically handle retries if an Activity fails.
 	retrypolicy := &temporal.RetryPolicy{
 		InitialInterval:    time.Second,
@@ -24,15 +25,21 @@ func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) error 
 		RetryPolicy: retrypolicy,
 	}
 	ctx = workflow.WithActivityOptions(ctx, options)
-	err := workflow.ExecuteActivity(ctx, Withdraw, transferDetails).Get(ctx, nil)
+
+	var output1 string
+	err := workflow.ExecuteActivity(ctx, Withdraw, input).Get(ctx, &output1)
 	if err != nil {
-		return err
+		return "", err
 	}
-	err = workflow.ExecuteActivity(ctx, Deposit, transferDetails).Get(ctx, nil)
+
+	var output2 string
+	err = workflow.ExecuteActivity(ctx, Deposit, input).Get(ctx, &output2)
 	if err != nil {
-		return err
+		return "", err
 	}
-	return nil
+
+	result := fmt.Sprintf("Transfer complete (transaction IDs: %s, %s)", output1, output2)
+	return result, nil
 }
 
 // @@@SNIPEND

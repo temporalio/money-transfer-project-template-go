@@ -2,33 +2,35 @@ package app
 
 import (
 	"context"
-	"fmt"
+	"log"
 )
 
 // @@@SNIPSTART money-transfer-project-template-go-activity-withdraw
-func Withdraw(ctx context.Context, transferDetails TransferDetails) error {
-	fmt.Printf(
-		"\nWithdrawing $%f from account %s. ReferenceId: %s\n",
-		transferDetails.Amount,
-		transferDetails.FromAccount,
-		transferDetails.ReferenceID,
+func Withdraw(ctx context.Context, data PaymentDetails) (string, error) {
+	log.Printf(
+		"Withdrawing $%d from account %s.\n\n",
+		data.Amount,
+		data.SourceAccount,
 	)
-	return nil
+	bank := BankingService{"bank-api.example.com"}
+	confirmation, err := bank.Withdraw(data.SourceAccount, data.Amount)
+	return confirmation, err
 }
 
 // @@@SNIPEND
 
 // @@@SNIPSTART money-transfer-project-template-go-activity-deposit
-func Deposit(ctx context.Context, transferDetails TransferDetails) error {
-	fmt.Printf(
-		"\nDepositing $%f into account %s. ReferenceId: %s\n",
-		transferDetails.Amount,
-		transferDetails.ToAccount,
-		transferDetails.ReferenceID,
+func Deposit(ctx context.Context, data PaymentDetails) (string, error) {
+	log.Printf(
+		"Depositing $%d into account %s.\n\n",
+		data.Amount,
+		data.TargetAccount,
 	)
-	// Switch out comments on the return statements to simulate an error
-	//return fmt.Errorf("deposit did not occur due to an issue")
-	return nil
+	bank := BankingService{"bank-api.example.com"}
+	// Uncomment the next line and comment the one after that to simulate failure
+	// confirmation, err := bank.DepositThatFails(data.TargetAccount, data.Amount)
+	confirmation, err := bank.Deposit(data.TargetAccount, data.Amount)
+	return confirmation, err
 }
 
 // @@@SNIPEND
