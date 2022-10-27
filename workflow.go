@@ -38,7 +38,6 @@ func MoneyTransfer(ctx workflow.Context, input PaymentDetails) (string, error) {
 	var depositOutput string
 	depositErr := workflow.ExecuteActivity(ctx, Deposit, input).Get(ctx, &depositOutput)
 
-	// @@@SNIPSTART money-transfer-project-template-go-workflow-compensation
 	if depositErr != nil {
 		// The deposit failed - put money back in original account
 
@@ -51,7 +50,6 @@ func MoneyTransfer(ctx workflow.Context, input PaymentDetails) (string, error) {
 
 		return "Deposit failed. Reversed", depositErr
 	}
-	// @@@SNIPEND
 
 	result := fmt.Sprintf("Transfer complete (transaction IDs: %s, %s)", withdrawOutput, depositOutput)
 	return result, nil
