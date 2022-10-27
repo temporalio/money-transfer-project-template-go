@@ -27,6 +27,7 @@ func main() {
 		SourceAccount: "85-150",
 		TargetAccount: "43-812",
 		Amount:        250,
+		ReferenceID:   "12345",
 	}
 
 	log.Printf("Starting transfer from account %s to account %s for %d", input.SourceAccount, input.TargetAccount, input.Amount)

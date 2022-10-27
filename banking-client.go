@@ -16,15 +16,15 @@ type BankingService struct {
 	Hostname string
 }
 
-func (client BankingService) Withdraw(accountNum string, amount int) (string, error) {
+func (client BankingService) Withdraw(accountNum string, amount int, referenceID string) (string, error) {
 	return generateTransactionId("W", 10), nil
 }
 
-func (client BankingService) Deposit(accountNum string, amount int) (string, error) {
+func (client BankingService) Deposit(accountNum string, amount int, referenceID string) (string, error) {
 	return generateTransactionId("D", 10), nil
 }
 
-func (client BankingService) DepositThatFails(accountNum string, amount int) (string, error) {
+func (client BankingService) DepositThatFails(accountNum string, amount int, referenceID string) (string, error) {
 	return "", errors.New("This deposit has failed.")
 }
 
