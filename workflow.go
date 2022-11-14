@@ -12,19 +12,21 @@ import (
 func MoneyTransfer(ctx workflow.Context, input PaymentDetails) (string, error) {
 	// RetryPolicy specifies how to automatically handle retries if an Activity fails.
 	retrypolicy := &temporal.RetryPolicy{
-		InitialInterval:    time.Second,
-		BackoffCoefficient: 2.0,
-		MaximumInterval:    time.Minute,
-		MaximumAttempts:    500,
+		InitialInterval:        time.Second,
+		BackoffCoefficient:     2.0,
+		MaximumInterval:        100 * time.Second,
+		MaximumAttempts:        0, // unlimited retries
+		NonRetryableErrorTypes: []string{"InvalidAccountError", "InsufficientFundsError"},
 	}
 	options := workflow.ActivityOptions{
 		// Timeout options specify when to automatically timeout Activity functions.
 		StartToCloseTimeout: time.Minute,
 		// Optionally provide a customized RetryPolicy.
-		// Temporal retries failures by default, this is just an example.
+		// Temporal retries failed Activities by default.
 		RetryPolicy: retrypolicy,
 	}
 
+	// Apply the options.
 	ctx = workflow.WithActivityOptions(ctx, options)
 
 	// withdraw money
@@ -45,7 +47,7 @@ func MoneyTransfer(ctx workflow.Context, input PaymentDetails) (string, error) {
 		reverseErr := workflow.ExecuteActivity(ctx, ReverseWithdraw, input).Get(ctx, &result)
 
 		if reverseErr != nil {
-			return "Unable to reverse the deposit.", reverseErr
+			return "Unable to reverse the withdrawal.", reverseErr
 		}
 
 		return "Deposit failed. Reversed", depositErr
