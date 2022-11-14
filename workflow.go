@@ -10,6 +10,7 @@ import (
 
 // @@@SNIPSTART money-transfer-project-template-go-workflow
 func MoneyTransfer(ctx workflow.Context, input PaymentDetails) (string, error) {
+
 	// RetryPolicy specifies how to automatically handle retries if an Activity fails.
 	retrypolicy := &temporal.RetryPolicy{
 		InitialInterval:        time.Second,
@@ -18,6 +19,7 @@ func MoneyTransfer(ctx workflow.Context, input PaymentDetails) (string, error) {
 		MaximumAttempts:        0, // unlimited retries
 		NonRetryableErrorTypes: []string{"InvalidAccountError", "InsufficientFundsError"},
 	}
+
 	options := workflow.ActivityOptions{
 		// Timeout options specify when to automatically timeout Activity functions.
 		StartToCloseTimeout: time.Minute,
@@ -29,19 +31,22 @@ func MoneyTransfer(ctx workflow.Context, input PaymentDetails) (string, error) {
 	// Apply the options.
 	ctx = workflow.WithActivityOptions(ctx, options)
 
-	// withdraw money
+	// Withdraw money.
 	var withdrawOutput string
+
 	withdrawErr := workflow.ExecuteActivity(ctx, Withdraw, input).Get(ctx, &withdrawOutput)
+
 	if withdrawErr != nil {
 		return "", withdrawErr
 	}
 
-	// deposit money
+	// Deposit money.
 	var depositOutput string
+
 	depositErr := workflow.ExecuteActivity(ctx, Deposit, input).Get(ctx, &depositOutput)
 
 	if depositErr != nil {
-		// The deposit failed - put money back in original account
+		// The deposit failed; put money back in original account.
 
 		var result string
 		reverseErr := workflow.ExecuteActivity(ctx, ReverseWithdraw, input).Get(ctx, &result)

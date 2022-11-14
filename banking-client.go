@@ -79,13 +79,14 @@ func (client BankingService) Withdraw(accountNumber string, amount int, referenc
 		return "", &InsufficientFundsError{}
 	}
 
-	return generateTransactionId("W", 10), nil
+	return generateTransactionID("W", 10), nil
 }
 
 // Deposit simulates a Withdrawwal from a bank.
 // Acceptsthe account number (string), amount (int), and a reference ID (string)
 // for idempotent transaction tracking.
-// Returns
+// Returns a transaction id when successful
+// Returns InvalidAccountError if the account is invalid
 func (client BankingService) Deposit(accountNumber string, amount int, referenceID string) (string, error) {
 
 	_, err := mockBank.findAccount(accountNumber)
@@ -93,13 +94,15 @@ func (client BankingService) Deposit(accountNumber string, amount int, reference
 		return "", &InvalidAccountError{}
 	}
 
-	return generateTransactionId("D", 10), nil
+	return generateTransactionID("D", 10), nil
 }
+
+// DepositThatFails simulates an unknonw error.
 func (client BankingService) DepositThatFails(accountNumber string, amount int, referenceID string) (string, error) {
 	return "", errors.New("This deposit has failed.")
 }
 
-func generateTransactionId(prefix string, length int) string {
+func generateTransactionID(prefix string, length int) string {
 	randChars := make([]byte, length)
 	for i := range randChars {
 		allowedChars := "0123456789"
