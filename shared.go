@@ -10,6 +10,7 @@ type PaymentDetails struct {
 	SourceAccount string
 	TargetAccount string
 	Amount        int
+	ReferenceID   string
 }
 
 // @@@SNIPEND
