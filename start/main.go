@@ -15,7 +15,7 @@ func main() {
 	c, err := client.Dial(client.Options{})
 
 	if err != nil {
-		log.Fatalln("Unable to create Temporal client.", err)
+		log.Fatalln("Unable to create Temporal client:", err)
 	}
 
 	defer c.Close()
@@ -36,7 +36,7 @@ func main() {
 
 	we, err := c.ExecuteWorkflow(context.Background(), options, app.MoneyTransfer, input)
 	if err != nil {
-		log.Fatalln("unable to start the Workflow", err)
+		log.Fatalln("Unable to start the Workflow:", err)
 	}
 
 	log.Printf("WorkflowID: %s RunID: %s\n", we.GetID(), we.GetRunID())
@@ -46,7 +46,7 @@ func main() {
 	err = we.Get(context.Background(), &result)
 
 	if err != nil {
-		log.Fatalln("unable to get Workflow result", err)
+		log.Fatalln("Unable to get Workflow result:", err)
 	}
 
 	log.Println(result)

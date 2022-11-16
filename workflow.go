@@ -49,13 +49,17 @@ func MoneyTransfer(ctx workflow.Context, input PaymentDetails) (string, error) {
 		// The deposit failed; put money back in original account.
 
 		var result string
-		reverseErr := workflow.ExecuteActivity(ctx, ReverseWithdraw, input).Get(ctx, &result)
 
-		if reverseErr != nil {
-			return "Unable to reverse the withdrawal.", reverseErr
+		refundErr := workflow.ExecuteActivity(ctx, Refund, input).Get(ctx, &result)
+
+		if refundErr != nil {
+			return "",
+				fmt.Errorf("Deposit: failed to deposit money into %v: %v. Money could not be returned to %v: %w",
+					input.TargetAccount, depositErr, input.SourceAccount, refundErr)
 		}
 
-		return "Deposit failed. Reversed", depositErr
+		return "", fmt.Errorf("Deposit: failed to deposit money into %v: Money returned to %v: %w",
+			input.TargetAccount, input.SourceAccount, depositErr)
 	}
 
 	result := fmt.Sprintf("Transfer complete (transaction IDs: %s, %s)", withdrawOutput, depositOutput)

@@ -22,15 +22,13 @@ type bank struct {
 
 func (b bank) findAccount(accountNumber string) (account, error) {
 
-	var result = account{}
-
 	for _, v := range b.Accounts {
 		if v.AccountNumber == accountNumber {
 			return v, nil
 		}
 	}
 
-	return result, errors.New("account not found")
+	return account{}, errors.New("account not found")
 }
 
 // InsufficientFundsError is raised when the account doesn't have enough money.
