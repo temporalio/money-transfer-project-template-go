@@ -24,7 +24,7 @@ func main() {
 	w.RegisterWorkflow(app.MoneyTransfer)
 	w.RegisterActivity(app.Withdraw)
 	w.RegisterActivity(app.Deposit)
-	w.RegisterActivity(app.ReverseWithdraw)
+	w.RegisterActivity(app.Refund)
 
 	// Start listening to the Task Queue.
 	err = w.Run(worker.InterruptCh())

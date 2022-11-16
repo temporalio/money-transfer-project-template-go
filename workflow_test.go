@@ -44,7 +44,7 @@ func Test_DepostFailedWorkflow(t *testing.T) {
 	// Mock activity implementation
 	env.OnActivity(Withdraw, mock.Anything, testDetails).Return("", nil)
 	env.OnActivity(Deposit, mock.Anything, testDetails).Return("", errors.New("unable to deposit"))
-	env.OnActivity(ReverseWithdraw, mock.Anything, testDetails).Return("", nil)
+	env.OnActivity(Refund, mock.Anything, testDetails).Return("", nil)
 
 	env.ExecuteWorkflow(MoneyTransfer, testDetails)
 	require.True(t, env.IsWorkflowCompleted())

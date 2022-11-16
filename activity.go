@@ -38,14 +38,14 @@ func Deposit(ctx context.Context, data PaymentDetails) (string, error) {
 
 // @@@SNIPEND
 
-// @@@SNIPSTART money-transfer-project-template-go-activity-reverse-deposit
-func ReverseWithdraw(ctx context.Context, data PaymentDetails) (string, error) {
-	log.Printf("Depositing $%v back into account %v.\n\n",
+// @@@SNIPSTART money-transfer-project-template-go-activity-refund
+func Refund(ctx context.Context, data PaymentDetails) (string, error) {
+	log.Printf("Refunding $%v back into account %v.\n\n",
 		data.Amount,
 		data.SourceAccount,
 	)
 
-	referenceID := fmt.Sprintf("%s-deposit", data.ReferenceID)
+	referenceID := fmt.Sprintf("%s-refund", data.ReferenceID)
 	bank := BankingService{"bank-api.example.com"}
 	confirmation, err := bank.Deposit(data.SourceAccount, data.Amount, referenceID)
 	return confirmation, err
