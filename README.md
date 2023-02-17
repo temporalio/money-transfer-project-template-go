@@ -2,7 +2,7 @@
 
 This is a simple project for demonstrating Temporal with the Go SDK.
 
-The full 20-minute tutorial is here: https://learn.temporal.io/getting_started/go/first_program_in_go/
+The full 10-minute tutorial is here: https://learn.temporal.io/getting_started/go/first_program_in_go/
 
 ## Basic instructions
 
@@ -15,8 +15,6 @@ git clone https://github.com/temporalio/docker-compose.git
 cd  docker-compose
 docker-compose up
 ```
-
-Leave it running. You can use the Temporal Web UI at [localhost:8080](localhost:8080) which is currently in Beta. To use the legacy Temporal Web UI, use the [localhost:8088](localhost:8088) URL instead. There should be no workflows visible in the dashboard right now.
 
 ### Step 1: Clone this Repository
 
@@ -44,8 +42,6 @@ go run worker/main.go
 ```
 
 Now you can see the workflow run to completion. You can also see the worker polling for workflows and activities in the task queue at [http://localhost:8080/namespaces/default/task-queues/TRANSFER_MONEY_TASK_QUEUE](http://localhost:8080/namespaces/default/task-queues/TRANSFER_MONEY_TASK_QUEUE).
-
-<img width="882" alt="CleanShot 2021-07-20 at 17 48 45@2x" src="https://user-images.githubusercontent.com/6764957/126413160-18663430-bb7a-4d3a-874e-80598e1fa07d.png">
 
 ## What Next?
 
