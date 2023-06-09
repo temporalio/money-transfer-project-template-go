@@ -81,7 +81,7 @@ func (client BankingService) Withdraw(accountNumber string, amount int, referenc
 }
 
 // Deposit simulates a Withdrawwal from a bank.
-// Acceptsthe account number (string), amount (int), and a reference ID (string)
+// Accepts the account number (string), amount (int), and a reference ID (string)
 // for idempotent transaction tracking.
 // Returns a transaction id when successful
 // Returns InvalidAccountError if the account is invalid
