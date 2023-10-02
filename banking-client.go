@@ -61,8 +61,8 @@ type BankingService struct {
 	Hostname string
 }
 
-// Withdraw simulates a Withdrawwal from a bank.
-// Acceptsthe account number (string), amount (int), and a reference ID (string)
+// Withdraw simulates a Withdrawal from a bank.
+// Accepts the account number (string), amount (int), and a reference ID (string)
 // for idempotent transaction tracking.
 // Returns a transaction id when successful
 // Returns various errors based on amount and account number.
@@ -80,7 +80,7 @@ func (client BankingService) Withdraw(accountNumber string, amount int, referenc
 	return generateTransactionID("W", 10), nil
 }
 
-// Deposit simulates a Withdrawwal from a bank.
+// Deposit simulates a Deposit into a bank.
 // Accepts the account number (string), amount (int), and a reference ID (string)
 // for idempotent transaction tracking.
 // Returns a transaction id when successful
