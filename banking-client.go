@@ -95,7 +95,7 @@ func (client BankingService) Deposit(accountNumber string, amount int, reference
 	return generateTransactionID("D", 10), nil
 }
 
-// DepositThatFails simulates an unknonw error.
+// DepositThatFails simulates an unknown error.
 func (client BankingService) DepositThatFails(accountNumber string, amount int, referenceID string) (string, error) {
 	return "", errors.New("This deposit has failed.")
 }

@@ -30,7 +30,7 @@ func Test_SuccessfulTransferWorkflow(t *testing.T) {
 	require.NoError(t, env.GetWorkflowError())
 }
 
-func Test_DepostFailedWorkflow(t *testing.T) {
+func Test_DepositFailedWorkflow(t *testing.T) {
 	testSuite := &testsuite.WorkflowTestSuite{}
 	env := testSuite.NewTestWorkflowEnvironment()
 
