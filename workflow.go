@@ -8,7 +8,6 @@ import (
 	"go.temporal.io/sdk/workflow"
 )
 
-// @@@SNIPSTART money-transfer-project-template-go-workflow
 func MoneyTransfer(ctx workflow.Context, input PaymentDetails) (string, error) {
 
 	// RetryPolicy specifies how to automatically handle retries if an Activity fails.
@@ -65,5 +64,3 @@ func MoneyTransfer(ctx workflow.Context, input PaymentDetails) (string, error) {
 	result := fmt.Sprintf("Transfer complete (transaction IDs: %s, %s)", withdrawOutput, depositOutput)
 	return result, nil
 }
-
-// @@@SNIPEND

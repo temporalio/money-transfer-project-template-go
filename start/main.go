@@ -9,7 +9,6 @@ import (
 	"money-transfer-project-template-go/app"
 )
 
-// @@@SNIPSTART money-transfer-project-template-go-start-workflow
 func main() {
 	// Create the client object just once per process
 	c, err := client.Dial(client.Options{})
@@ -51,5 +50,3 @@ func main() {
 
 	log.Println(result)
 }
-
-// @@@SNIPEND
