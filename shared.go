@@ -32,11 +32,11 @@ type PaymentDetails struct {
 // it based on environment variables, and returns that instance. It
 // supports the following environment variables:
 //
-//		TEMPORAL_ADDRESS: Host and port (formatted as host:port) of the endpoint (Temporal frontend)
-//		TEMPORAL_NAMESPACE: Namespace to be used by the Client
-//	 TEMPORAL_CLOUD_API_KEY: The API key to use for authentication in Temporal Cloud
-//		TEMPORAL_TLS_CERT: Path to the x509 certificate
-//		TEMPORAL_TLS_KEY: Path to the private certificate key
+//	TEMPORAL_ADDRESS: Host and port (formatted as host:port) of the endpoint (Temporal frontend)
+//	TEMPORAL_NAMESPACE: Namespace to be used by the Client
+//	TEMPORAL_CLOUD_API_KEY: The API key to use for authentication in Temporal Cloud
+//	TEMPORAL_TLS_CERT: Path to the x509 certificate
+//	TEMPORAL_TLS_KEY: Path to the private certificate key
 //
 // This uses the SDK's default configuration for a given setting if the
 // corresponding environment variable is not set.
