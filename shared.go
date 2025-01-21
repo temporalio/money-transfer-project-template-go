@@ -34,7 +34,7 @@ type PaymentDetails struct {
 //
 //	TEMPORAL_ADDRESS: Host and port (formatted as host:port) of the endpoint (Temporal frontend)
 //	TEMPORAL_NAMESPACE: Namespace to be used by the Client
-//	TEMPORAL_CLOUD_API_KEY: The API key to use for authentication in Temporal Cloud
+//	TEMPORAL_API_KEY: The API key to use for authentication in Temporal Cloud
 //	TEMPORAL_TLS_CERT: Path to the x509 certificate
 //	TEMPORAL_TLS_KEY: Path to the private certificate key
 //
@@ -49,7 +49,7 @@ func CreateClientOptionsFromEnv() (client.Options, error) {
 		Namespace: namespaceName,
 	}
 
-	if apiKey := os.Getenv("TEMPORAL_CLOUD_API_KEY"); apiKey != "" {
+	if apiKey := os.Getenv("TEMPORAL_API_KEY"); apiKey != "" {
 		// Warn if the environment variable for an API key is defined, but
 		// but the endpoint address is not valid for API key authentication.
 		// The detail page for the Namespace in Temporal Cloud will show
