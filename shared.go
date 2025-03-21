@@ -50,13 +50,13 @@ func CreateClientOptionsFromEnv() (client.Options, error) {
 	}
 
 	if apiKey := os.Getenv("TEMPORAL_API_KEY"); apiKey != "" {
-		// Warn if the environment variable for an API key is defined, but
-		// but the endpoint address is not valid for API key authentication.
-		// The detail page for the Namespace in Temporal Cloud will show
-		// which endpoint to use with API keys (has a temporal.io domain)
-		// and which endpoint to use with mTLS (has a tmprl.cloud domain).
-		if !strings.Contains(hostPort, ".temporal.io:") {
-			log.Println("warning: using an API key, but not an API key endpoint")
+		// Warn if the API Key environment variable is defined, but the
+		// endpoint address is not valid for API key authentication with
+		// Temporal Cloud. The detail page for the Namespace in Temporal
+		// Cloud shows which endpoint to use with API keys (has a temporal.io
+		// domain) and which to use with mTLS (has a tmprl.cloud domain).
+		if strings.Contains(hostPort, ".tmprl.cloud:") {
+			log.Println("warning: using an API key with invalid Temporal Cloud endpoint")
 		}
 
 		clientOpts.Credentials = client.NewAPIKeyStaticCredentials(apiKey)
