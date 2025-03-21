@@ -1,7 +1,6 @@
 package app
 
 import (
-	"context"
 	"crypto/tls"
 	"fmt"
 	"log"
@@ -9,8 +8,6 @@ import (
 	"strings"
 
 	"go.temporal.io/sdk/client"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/metadata"
 )
 
 // @@@SNIPSTART money-transfer-project-template-go-shared-task-queue
@@ -62,20 +59,6 @@ func CreateClientOptionsFromEnv() (client.Options, error) {
 		clientOpts.Credentials = client.NewAPIKeyStaticCredentials(apiKey)
 		clientOpts.ConnectionOptions = client.ConnectionOptions{
 			TLS: &tls.Config{},
-			DialOptions: []grpc.DialOption{
-				grpc.WithUnaryInterceptor(
-					func(ctx context.Context, method string, req any, reply any, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
-						return invoker(
-							metadata.AppendToOutgoingContext(ctx, "temporal-namespace", namespaceName),
-							method,
-							req,
-							reply,
-							cc,
-							opts...,
-						)
-					},
-				),
-			},
 		}
 	}
 
