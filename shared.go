@@ -1,12 +1,13 @@
 package app
 
 import (
+	"crypto/tls"
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"go.temporal.io/sdk/client"
-	"go.temporal.io/sdk/contrib/envconfig"
 )
 
 // @@@SNIPSTART money-transfer-project-template-go-shared-task-queue
@@ -24,29 +25,52 @@ type PaymentDetails struct {
 
 // @@@SNIPEND
 
-// CreateClientOptionsFromEnv creates and returns an instance of
-// client.Options instance, based on two environment variables:
+// CreateClientOptionsFromEnv creates a client.Options instance, configures
+// it based on environment variables, and returns that instance. It
+// supports the following environment variables:
 //
-//	TEMPORAL_CONFIG_PATH: Path to the TOML file that defines the profile
-//	TEMPORAL_PROFILE_NAME: Name of a specific profile in the TOML file to use
+//	TEMPORAL_ADDRESS: Host and port (formatted as host:port) of the endpoint (Temporal frontend)
+//	TEMPORAL_NAMESPACE: Namespace to be used by the Client
+//	TEMPORAL_API_KEY: The API key to use for authentication in Temporal Cloud
+//	TEMPORAL_TLS_CERT: Path to the x509 certificate
+//	TEMPORAL_TLS_KEY: Path to the private certificate key
+//
+// This uses the SDK's default configuration for a given setting if the
+// corresponding environment variable is not set.
 func CreateClientOptionsFromEnv() (client.Options, error) {
-	configFilePath := os.Getenv("TEMPORAL_CONFIG_PATH")
-	profileName := os.Getenv("TEMPORAL_PROFILE_NAME")
+	hostPort := os.Getenv("TEMPORAL_ADDRESS")
+	namespaceName := os.Getenv("TEMPORAL_NAMESPACE")
 
-	clientOpts := client.Options{}
-	if configFilePath == "" {
-		return clientOpts, fmt.Errorf("env var 'TEMPORAL_CONFIG_PATH' not set")
-	}
-	if profileName == "" {
-		return clientOpts, fmt.Errorf("env var 'TEMPORAL_PROFILE_NAME' not set")
+	clientOpts := client.Options{
+		HostPort:  hostPort,
+		Namespace: namespaceName,
 	}
 
-	clientOpts, err := envconfig.LoadClientOptions(envconfig.LoadClientOptionsRequest{
-		ConfigFilePath:    configFilePath,
-		ConfigFileProfile: profileName,
-	})
-	if err != nil {
-		log.Fatalf("failed to load profile: %v", err)
+	if apiKey := os.Getenv("TEMPORAL_API_KEY"); apiKey != "" {
+		// Warn if the API Key environment variable is defined, but the
+		// endpoint address is not valid for API key authentication with
+		// Temporal Cloud. The detail page for the Namespace in Temporal
+		// Cloud shows which endpoint to use with API keys (has a temporal.io
+		// domain) and which to use with mTLS (has a tmprl.cloud domain).
+		if strings.Contains(hostPort, ".tmprl.cloud:") {
+			log.Println("warning: using an API key with invalid Temporal Cloud endpoint")
+		}
+
+		clientOpts.Credentials = client.NewAPIKeyStaticCredentials(apiKey)
+		clientOpts.ConnectionOptions = client.ConnectionOptions{
+			TLS: &tls.Config{},
+		}
+	}
+
+	if certPath := os.Getenv("TEMPORAL_TLS_CERT"); certPath != "" {
+		cert, err := tls.LoadX509KeyPair(certPath, os.Getenv("TEMPORAL_TLS_KEY"))
+		if err != nil {
+			return clientOpts, fmt.Errorf("failed loading key pair: %w", err)
+		}
+
+		clientOpts.ConnectionOptions.TLS = &tls.Config{
+			Certificates: []tls.Certificate{cert},
+		}
 	}
 
 	return clientOpts, nil
