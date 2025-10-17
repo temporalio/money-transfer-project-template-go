@@ -5,7 +5,7 @@ go 1.23.0
 toolchain go1.24.9
 
 require (
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.1
 	go.temporal.io/sdk v1.37.0
 	go.temporal.io/sdk/contrib/envconfig v0.1.0
 )
