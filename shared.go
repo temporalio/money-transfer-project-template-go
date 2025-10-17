@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -30,23 +29,19 @@ type PaymentDetails struct {
 //	TEMPORAL_CONFIG_PATH: Path to the TOML file that defines the profile
 //	TEMPORAL_PROFILE_NAME: Name of a specific profile in the TOML file to use
 func CreateClientOptionsFromEnv() (client.Options, error) {
+	clientOpts := client.Options{}
+
 	configFilePath := os.Getenv("TEMPORAL_CONFIG_PATH")
 	profileName := os.Getenv("TEMPORAL_PROFILE_NAME")
-
-	clientOpts := client.Options{}
-	if configFilePath == "" {
-		return clientOpts, fmt.Errorf("env var 'TEMPORAL_CONFIG_PATH' not set")
-	}
-	if profileName == "" {
-		return clientOpts, fmt.Errorf("env var 'TEMPORAL_PROFILE_NAME' not set")
-	}
-
-	clientOpts, err := envconfig.LoadClientOptions(envconfig.LoadClientOptionsRequest{
-		ConfigFilePath:    configFilePath,
-		ConfigFileProfile: profileName,
-	})
-	if err != nil {
-		log.Fatalf("failed to load profile: %v", err)
+	if configFilePath != "" && profileName != "" {
+		var err error
+		clientOpts, err = envconfig.LoadClientOptions(envconfig.LoadClientOptionsRequest{
+			ConfigFilePath:    configFilePath,
+			ConfigFileProfile: profileName,
+		})
+		if err != nil {
+			log.Fatalf("failed to load profile: %v", err)
+		}
 	}
 
 	return clientOpts, nil
