@@ -1,8 +1,9 @@
 package app
 
 import (
-	"log"
+	"fmt"
 	"os"
+	"path/filepath"
 
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/contrib/envconfig"
@@ -24,25 +25,37 @@ type PaymentDetails struct {
 // @@@SNIPEND
 
 // CreateClientOptionsFromEnv creates and returns an instance of
-// client.Options instance, based on two environment variables:
-//
-//	TEMPORAL_CONFIG_PATH: Path to the TOML file that defines the profile
-//	TEMPORAL_PROFILE_NAME: Name of a specific profile in the TOML file to use
+// client.Options. This uses the default settings, unless the
+// TEMPORAL_PROFILE_NAME environment variable is set, in which case
+// it configures the options as per the specified profile name.
 func CreateClientOptionsFromEnv() (client.Options, error) {
-	clientOpts := client.Options{}
-
-	configFilePath := os.Getenv("TEMPORAL_CONFIG_PATH")
 	profileName := os.Getenv("TEMPORAL_PROFILE_NAME")
-	if configFilePath != "" && profileName != "" {
-		var err error
-		clientOpts, err = envconfig.LoadClientOptions(envconfig.LoadClientOptionsRequest{
-			ConfigFilePath:    configFilePath,
-			ConfigFileProfile: profileName,
-		})
-		if err != nil {
-			log.Fatalf("failed to load profile: %v", err)
-		}
+	if profileName == "" {
+		return client.Options{}, nil
+	}
+
+	configFilePath, err := DefaultConfigFilePath()
+	if err != nil {
+		return client.Options{}, fmt.Errorf("failed to get config path: %w", err)
+	}
+
+	clientOpts, err := envconfig.LoadClientOptions(envconfig.LoadClientOptionsRequest{
+		ConfigFilePath:    configFilePath,
+		ConfigFileProfile: profileName,
+	})
+	if err != nil {
+		return client.Options{}, fmt.Errorf("failed to load profile %q: %w", profileName, err)
 	}
 
 	return clientOpts, nil
+}
+
+// Returns the path representing the default location of the
+// configuration file, based on the current operating system.
+func DefaultConfigFilePath() (string, error) {
+	userDir, err := os.UserConfigDir()
+	if err != nil {
+		return "", fmt.Errorf("failed getting user config dir: %w", err)
+	}
+	return filepath.Join(userDir, "temporalio", "temporal.toml"), nil
 }
