@@ -26,10 +26,10 @@ type PaymentDetails struct {
 
 // CreateClientOptionsFromEnv creates and returns an instance of
 // client.Options. This uses the default settings, unless the
-// TEMPORAL_PROFILE_NAME environment variable is set, in which case
+// TEMPORAL_PROFILE environment variable is set, in which case
 // it configures the options as per the specified profile name.
 func CreateClientOptionsFromEnv() (client.Options, error) {
-	profileName := os.Getenv("TEMPORAL_PROFILE_NAME")
+	profileName := os.Getenv("TEMPORAL_PROFILE")
 	if profileName == "" {
 		return client.Options{}, nil
 	}
