@@ -2,14 +2,16 @@ module money-transfer-project-template-go/app
 
 go 1.23.0
 
-toolchain go1.24.7
+toolchain go1.24.9
 
 require (
 	github.com/stretchr/testify v1.11.1
-	go.temporal.io/sdk v1.36.0
+	go.temporal.io/sdk v1.37.0
+	go.temporal.io/sdk/contrib/envconfig v0.1.0
 )
 
 require (
+	github.com/BurntSushi/toml v1.4.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
@@ -21,7 +23,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/robfig/cron v1.2.0 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect
-	go.temporal.io/api v1.51.0 // indirect
+	go.temporal.io/api v1.53.0 // indirect
 	golang.org/x/net v0.39.0 // indirect
 	golang.org/x/sync v0.13.0 // indirect
 	golang.org/x/sys v0.32.0 // indirect
