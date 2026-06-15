@@ -1,11 +1,10 @@
 package main
 
 import (
-	"crypto/tls"
 	"log"
-	"os"
 
 	"go.temporal.io/sdk/client"
+	"go.temporal.io/sdk/contrib/envconfig"
 	"go.temporal.io/sdk/worker"
 
 	"money-transfer-project-template-go/app"
@@ -14,16 +13,17 @@ import (
 // @@@SNIPSTART money-transfer-project-template-go-worker
 func main() {
 
-	// Connect to Temporal Cloud using the gRPC endpoint, namespace, and API key
-	// supplied via environment variables, with TLS enabled.
-	c, err := client.Dial(client.Options{
-		HostPort:    os.Getenv("TEMPORAL_ADDRESS"),
-		Namespace:   os.Getenv("TEMPORAL_NAMESPACE"),
-		Credentials: client.NewAPIKeyStaticCredentials(os.Getenv("TEMPORAL_API_KEY")),
-		ConnectionOptions: client.ConnectionOptions{
-			TLS: &tls.Config{},
-		},
+	// Connect to Temporal Cloud by loading the "cloud-setup" profile from the
+	// shared Temporal client config (temporal.toml), which supplies the Cloud
+	// address, namespace, TLS settings, and API key.
+	opts, err := envconfig.LoadClientOptions(envconfig.LoadClientOptionsRequest{
+		ConfigFileProfile: "cloud-setup",
 	})
+	if err != nil {
+		log.Fatalln("Unable to load Temporal client options.", err)
+	}
+
+	c, err := client.Dial(opts)
 	if err != nil {
 		log.Fatalln("Unable to create Temporal client.", err)
 	}
