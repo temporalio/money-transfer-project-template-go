@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"os"
 
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/contrib/envconfig"
@@ -38,8 +39,16 @@ func main() {
 		ReferenceID:   "12345",
 	}
 
+	// Use the WORKFLOW_ID from the environment if set (the cloud-setup flow uses
+	// distinct names for the clean run and the failure-and-recovery run), and
+	// otherwise fall back to the default demo name.
+	workflowID := os.Getenv("WORKFLOW_ID")
+	if workflowID == "" {
+		workflowID = "money-transfer-demo"
+	}
+
 	options := client.StartWorkflowOptions{
-		ID:        "pay-invoice-701",
+		ID:        workflowID,
 		TaskQueue: app.MoneyTransferTaskQueueName,
 	}
 
