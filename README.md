@@ -25,6 +25,19 @@ git clone https://github.com/temporalio/money-transfer-project-template-go
 cd money-transfer-project-template-go
 ```
 
+### Connection configuration
+
+The starter and Worker load the standard Temporal client configuration. With no configuration, they connect to a local Temporal Service on `localhost:7233` and use the `default` Namespace.
+
+To use a profile created by the Temporal CLI, set `TEMPORAL_PROFILE` when running both programs:
+
+```bash
+TEMPORAL_PROFILE=cloud go run start/main.go
+TEMPORAL_PROFILE=cloud go run worker/main.go
+```
+
+You can override the configuration file with `TEMPORAL_CONFIG_FILE`. Standard overrides such as `TEMPORAL_ADDRESS`, `TEMPORAL_NAMESPACE`, and `TEMPORAL_API_KEY` are also supported.
+
 ### Step 2: Run the Workflow
 
 ```bash

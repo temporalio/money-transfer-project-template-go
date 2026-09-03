@@ -12,7 +12,12 @@ import (
 // @@@SNIPSTART money-transfer-project-template-go-start-workflow
 func main() {
 	// Create the client object just once per process
-	c, err := client.Dial(client.Options{})
+	clientOptions, err := app.LoadClientOptions()
+	if err != nil {
+		log.Fatalln("Unable to load Temporal client configuration:", err)
+	}
+
+	c, err := client.Dial(clientOptions)
 
 	if err != nil {
 		log.Fatalln("Unable to create Temporal client:", err)

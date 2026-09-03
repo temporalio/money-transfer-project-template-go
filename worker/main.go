@@ -11,8 +11,12 @@ import (
 
 // @@@SNIPSTART money-transfer-project-template-go-worker
 func main() {
+	clientOptions, err := app.LoadClientOptions()
+	if err != nil {
+		log.Fatalln("Unable to load Temporal client configuration:", err)
+	}
 
-	c, err := client.Dial(client.Options{})
+	c, err := client.Dial(clientOptions)
 	if err != nil {
 		log.Fatalln("Unable to create Temporal client.", err)
 	}
