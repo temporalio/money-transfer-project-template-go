@@ -33,7 +33,7 @@ func main() {
 	}
 
 	options := client.StartWorkflowOptions{
-		ID:        "pay-invoice-701",
+		ID:        app.EnvOr("TEMPORAL_WORKFLOW_ID", "pay-invoice-701"),
 		TaskQueue: app.MoneyTransferTaskQueueName,
 	}
 
